@@ -9,7 +9,11 @@ List<ContactSrc> teleponGroup = [
 ];
 
 List<ContactSrc> contactGroup = [
-  ContactSrc(src: 'all contact', amount: '49 people'),
+  ContactSrc(
+    src: 'all contact',
+    address: '',
+    amount: '49 people',
+  ),
   ContactSrc(
     src: 'Telegram',
     address: '2683387',

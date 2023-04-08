@@ -4,17 +4,17 @@ import 'package:azlistview/azlistview.dart';
 class ContactInfo extends ISuspensionBean {
   String name;
   String? tagIndex;
-  String? id;
+  String? phone;
 
   ContactInfo({
-    this.id,
+    this.phone,
     required this.name,
     this.tagIndex,
   });
 
   ContactInfo.fromJson(Map<String, dynamic> json)
       : name = json['name'],
-        id = json['id']?.toString();
+        phone = json['phone']?.toString();
 
   @override
   String getSuspensionTag() => tagIndex!;

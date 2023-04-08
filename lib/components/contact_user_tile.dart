@@ -1,10 +1,9 @@
-import 'package:contact_app/utils/model.dart';
 import 'package:flutter/material.dart';
 import 'package:random_avatar/random_avatar.dart';
 
 class ContactUserTile extends StatelessWidget {
-  final ContactInfo? model;
-  ContactUserTile({this.model});
+  final String? name;
+  ContactUserTile({this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +15,31 @@ class ContactUserTile extends StatelessWidget {
           width: 36,
         ),
       ),
-      title: Text(model!.name),
+      title: Text(name!),
       onTap: () {},
+    );
+  }
+}
+
+class ContactSusTile extends StatelessWidget {
+  final String? tag;
+  ContactSusTile({this.tag});
+
+  @override
+  Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
+    return Container(
+      // width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(left: 16.0),
+      color: Color(0xFFF3F4F5),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        '$tag',
+        softWrap: false,
+        style: theme.textTheme.bodySmall!
+          ..copyWith(color: theme.colorScheme.tertiary),
+      ),
     );
   }
 }

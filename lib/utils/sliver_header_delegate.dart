@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
 class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
-  SliverHeaderDelegate({required this.child});
+  SliverHeaderDelegate({required this.child, this.height = 60});
 
+  final double? height;
   final Widget child;
 
   @override
-  double get minExtent => 70;
+  double get minExtent => height!;
 
   @override
-  double get maxExtent => 70;
+  double get maxExtent => height!;
 
   @override
   Widget build(
@@ -19,7 +20,7 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   ) {
     return SizedBox.expand(
       child: Padding(
-        padding: EdgeInsets.all(15),
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         child: child,
       ),
     );
