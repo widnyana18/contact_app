@@ -26,7 +26,7 @@ class ContactNotifier extends ChangeNotifier {
   List<ContactInfo> get contactList => _contactList;
 
   void _loadData() async {
-    rootBundle.loadString('assets/data/contacts.json').then((value) {
+    await rootBundle.loadString('assets/data/contacts.json').then((value) {
       List list = json.decode(value);
       list.forEach((v) {
         _contactList.add(ContactInfo.fromJson(v));

@@ -1,5 +1,5 @@
-import 'package:contact_app/components/data_filter_widget.dart';
 import 'package:contact_app/controllers/contact_notifier.dart';
+import 'package:contact_app/controllers/dial_pad_notifier.dart';
 import 'package:contact_app/utils/utils.dart';
 import 'package:contact_app/view/contact_view.dart';
 import 'package:contact_app/view/telepon_view.dart';
@@ -15,22 +15,7 @@ class HomePage extends StatelessWidget {
     final theme = Theme.of(context);
     final txtTheme = theme.textTheme;
 
-    final addFab = FloatingActionButton(
-      onPressed: () {},
-      tooltip: 'Add Contact',
-      child: Icon(Icons.add_rounded),
-      backgroundColor: theme.colorScheme.secondary,
-    );
-
-    final dialFab = FloatingActionButton(
-      onPressed: () {},
-      tooltip: 'Dialpad phone',
-      child: Icon(Icons.dialpad),
-      backgroundColor: theme.colorScheme.primary,
-    );
-
     return Scaffold(
-      floatingActionButton: dialFab,
       body: SafeArea(
         child: DefaultTabController(
           initialIndex: 1,
@@ -72,38 +57,16 @@ class HomePage extends StatelessWidget {
                       ),
                       floating: true,
                     ),
-                    SliverPersistentHeader(
-                      delegate: SliverHeaderDelegate(
-                        height: 50,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextButton.icon(
-                              label: Text(
-                                'Sync contact with cloud',
-                                style: txtTheme.bodyLarge?.copyWith(
-                                    color: theme.colorScheme.secondary),
-                              ),
-                              icon: Icon(
-                                Icons.navigate_before,
-                                color: theme.colorScheme.secondary,
-                              ),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SliverPersistentHeader(
-                      delegate: SliverHeaderDelegate(
-                        child: DataFilterWidget(),
-                      ),
-                      pinned: true,
-                    ),
                   ],
-                  body: ChangeNotifierProvider(
-                    create: (_) => ContactNotifier(),
+                  body: MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(
+                        create: (_) => DialPadNotifier(),
+                      ),
+                      ChangeNotifierProvider(
+                        create: (_) => ContactNotifier(),
+                      ),
+                    ],
                     child: TabBarView(
                       children: [
                         TeleponView(),

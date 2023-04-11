@@ -22,3 +22,26 @@ class ContactInfo extends ISuspensionBean {
   @override
   String toString() => json.encode(this);
 }
+
+class TeleponInfo {
+  final String uid, name, phone, date;
+  final bool isActive;
+
+  TeleponInfo({
+    required this.uid,
+    required this.phone,
+    required this.name,
+    required this.date,
+    this.isActive = true,
+  });
+
+  TeleponInfo.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        phone = json['phone'].toString(),
+        uid = json['id'],
+        date = json['date'],
+        isActive = json['active'];
+
+  @override
+  String toString() => json.encode(this);
+}

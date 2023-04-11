@@ -2,6 +2,9 @@ import 'package:contact_app/utils/data_view.dart';
 import 'package:flutter/material.dart';
 
 class DataFilterWidget extends StatelessWidget {
+  final List<ContactSrc> data;
+  DataFilterWidget(this.data);
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
