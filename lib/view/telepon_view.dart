@@ -1,24 +1,26 @@
-import 'dart:convert' show json;
+import 'package:contact_app/controllers/contact_notifier.dart';
 import 'package:contact_app/utils/data_view.dart';
-import 'package:contact_app/utils/model.dart';
 import 'package:contact_app/view/dial_pad_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:provider/provider.dart';
 import '../components/components.dart';
 
-class TeleponView extends StatelessWidget {
-  const TeleponView({super.key});
+class TeleponView extends StatefulWidget {
+  TeleponView({super.key});
 
-  List<TeleponInfo> get _loadData {
-    final List<TeleponInfo> contactList = [];
-    rootBundle.loadString('assets/data/contacts.json').then((value) {
-      List list = json.decode(value);
-      list.forEach((v) {
-        contactList.add(TeleponInfo.fromJson(v));
-      });
-    });
-    return contactList;
-  }
+  @override
+  State<TeleponView> createState() => _TeleponViewState();
+}
+
+class _TeleponViewState extends State<TeleponView> {
+  // Future<List<TeleponInfo>> _loadData() async {
+  //   final value = await rootBundle.loadString('assets/data/contacts.json');
+  //   final list = json.decode(value);
+  //   List<TeleponInfo> data = list.map((v) {
+  //     return TeleponInfo.fromJson(v);
+  //   }).toList();
+  //   return data;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +29,20 @@ class TeleponView extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: ListView.builder(
-            itemCount: _loadData.length,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return DataFilterWidget(teleponGroup);
-              }
-              return CallHistoryTile(_loadData[index]);
-            },
-          ),
+        Consumer<ContactNotifier>(
+          builder: (context, value, child) {
+            final data = value.teleponList;
+            print(data.length);
+            return ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  return DataFilterWidget(teleponGroup);
+                }
+                return CallHistoryTile(data[index]);
+              },
+            );
+          },
         ),
         Positioned(
           bottom: 16.0,

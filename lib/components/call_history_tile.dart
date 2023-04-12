@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:random_avatar/random_avatar.dart';
 
 class CallHistoryTile extends StatelessWidget {
-  final TeleponInfo data;
+  final ContactInfo data;
   CallHistoryTile(this.data);
 
   @override
@@ -19,7 +19,7 @@ class CallHistoryTile extends StatelessWidget {
         ),
       ),
       title: Text(data.name),
-      subtitle: Text('${data.phone} ${data.date} $status'),
+      subtitle: Text('${data.phones} ${data.date} $status'),
       trailing: CircleAvatar(
         radius: 22,
         backgroundColor: Colors.grey,

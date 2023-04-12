@@ -1,10 +1,10 @@
-import 'package:contact_app/controllers/contact_notifier.dart';
-import 'package:contact_app/controllers/dial_pad_notifier.dart';
 import 'package:contact_app/utils/utils.dart';
 import 'package:contact_app/view/contact_view.dart';
 import 'package:contact_app/view/telepon_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'controllers/controllers.dart';
 
 class HomePage extends StatelessWidget {
   final Widget child;
@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: DefaultTabController(
-          initialIndex: 1,
+          initialIndex: 0,
           length: 2,
           child: Column(
             children: [
@@ -61,10 +61,10 @@ class HomePage extends StatelessWidget {
                   body: MultiProvider(
                     providers: [
                       ChangeNotifierProvider(
-                        create: (_) => DialPadNotifier(),
+                        create: (_) => ContactNotifier(),
                       ),
                       ChangeNotifierProvider(
-                        create: (_) => ContactNotifier(),
+                        create: (_) => DialPadNotifier(),
                       ),
                     ],
                     child: TabBarView(

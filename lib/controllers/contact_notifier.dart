@@ -6,13 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ContactNotifier extends ChangeNotifier {
-  List<ContactInfo> _contactList = [];
-  List<ContactInfo> _topList = [];
+  List<ContactInfo> _dataRaw = [];
+  List<ContactInfo> _dataModified = [];
 
   ContactNotifier._sharedInstance() {
-    _topList.add(ContactInfo(name: 'I Guora Manrow', tagIndex: '♥'));
-    _topList.add(ContactInfo(name: 'My Group', tagIndex: '♥'));
-    _topList.add(ContactInfo(name: 'Akademik Stikom', tagIndex: '♥'));
+    final topList = [
+      ContactInfo(name: 'I Guora Manrow', tagIndex: '♥'),
+      ContactInfo(name: 'My Group', tagIndex: '♥'),
+      ContactInfo(name: 'Akademik Stikom', tagIndex: '♥'),
+    ];
+    _dataModified.addAll(topList);
 
     Future.delayed(Duration(milliseconds: 500), () {
       _loadData();
@@ -23,15 +26,17 @@ class ContactNotifier extends ChangeNotifier {
 
   factory ContactNotifier() => _shared;
 
-  List<ContactInfo> get contactList => _contactList;
+  List<ContactInfo> get contactList => _dataModified;
+
+  List<ContactInfo> get teleponList => _dataRaw;
 
   void _loadData() async {
     await rootBundle.loadString('assets/data/contacts.json').then((value) {
       List list = json.decode(value);
       list.forEach((v) {
-        _contactList.add(ContactInfo.fromJson(v));
+        _dataRaw.add(ContactInfo.fromJson(v));
       });
-      _handleList(_contactList);
+      _handleList(_dataRaw);
       notifyListeners();
     });
   }
@@ -49,12 +54,12 @@ class ContactNotifier extends ChangeNotifier {
       }
     }
     // A-Z sort.
-    SuspensionUtil.sortListBySuspensionTag(_contactList);
+    SuspensionUtil.sortListBySuspensionTag(_dataRaw);
 
     // show sus tag.
-    SuspensionUtil.setShowSuspensionStatus(_contactList);
+    SuspensionUtil.setShowSuspensionStatus(_dataRaw);
 
-    // add _topList.
-    _contactList.insertAll(0, _topList);
+    // add _dataModified.
+    _dataModified.addAll(_dataRaw);
   }
 }

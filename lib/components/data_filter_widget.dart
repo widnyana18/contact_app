@@ -13,16 +13,16 @@ class DataFilterWidget extends StatelessWidget {
       child: DropdownButton<String>(
         icon: Icon(Icons.keyboard_arrow_down_rounded),
         iconEnabledColor: theme.colorScheme.tertiary,
-        value: contactGroup.first.src,
+        value: data.first.src,
         isExpanded: true,
-        items: contactGroup
+        items: data
             .map(
               (item) => DropdownMenuItem<String>(
                 value: item.src!,
                 child: ListTile(
                   title: Text(item.src!),
-                  subtitle: item.address! != '' ? Text(item.address!) : null,
-                  trailing: Text(item.amount!),
+                  subtitle: Text(item.address ?? ''),
+                  trailing: Text(item.amount ?? ''),
                   dense: true,
                   iconColor: theme.colorScheme.primary,
                   selectedColor: theme.colorScheme.primary,
