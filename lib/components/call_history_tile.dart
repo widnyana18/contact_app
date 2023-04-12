@@ -19,7 +19,7 @@ class CallHistoryTile extends StatelessWidget {
         ),
       ),
       title: Text(data.name),
-      subtitle: Text('${data.phones} ${data.date} $status'),
+      subtitle: Text('${data.phone} ${data.date} $status'),
       trailing: CircleAvatar(
         radius: 22,
         backgroundColor: Colors.grey,
