@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
                   headerSliverBuilder: (_, __) => [
                     SliverPersistentHeader(
                       delegate: SliverHeaderDelegate(
-                        child: ListTile(
+                        tightedChild: ListTile(
                           dense: true,
                           iconColor: theme.canvasColor,
                           leading: Icon(Icons.search_rounded),

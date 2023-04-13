@@ -4,3 +4,4 @@ export 'contact_details_view.dart';
 export 'setting_view.dart';
 export 'error_view.dart';
 export 'telepon_view.dart';
+export 'call_view.dart';

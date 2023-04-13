@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Contact Phone',
       theme: AppTheme.light,
-      home: HomePage(child: TeleponView()),
+      home: ContactDetailsView(userId: '1'),
+      // HomePage(child: TeleponView()),
     );
   }
 }

@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 
 class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
-  SliverHeaderDelegate({required this.child, this.height = 60});
+  SliverHeaderDelegate({
+    required this.tightedChild,
+    this.minHeight = 60,
+    this.maxHeight,
+    this.expandedChild,
+  });
 
-  final double? height;
-  final Widget child;
+  final double minHeight;
+  final double? maxHeight;
+  final Widget tightedChild;
+  final Widget? expandedChild;
 
   @override
-  double get minExtent => height!;
+  double get minExtent => minHeight;
 
   @override
-  double get maxExtent => height!;
+  double get maxExtent => maxHeight ?? minHeight;
 
   @override
   Widget build(
@@ -21,12 +28,19 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
     return SizedBox.expand(
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: child,
+        child: AnimatedCrossFade(
+          duration: Duration(seconds: 1),
+          crossFadeState: shrinkOffset >= maxExtent * .5
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
+          firstChild: expandedChild!,
+          secondChild: tightedChild,
+        ),
       ),
     );
   }
 
   @override
   bool shouldRebuild(SliverHeaderDelegate oldDelegate) =>
-      child != oldDelegate.child;
+      tightedChild != oldDelegate.tightedChild;
 }
