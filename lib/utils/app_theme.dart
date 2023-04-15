@@ -49,8 +49,7 @@ class AppTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        shape: CircleBorder(),
-        textStyle: txtTheme.headlineMedium,
+        textStyle: txtTheme.bodyLarge,
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(

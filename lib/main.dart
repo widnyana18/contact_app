@@ -1,5 +1,6 @@
 import 'package:contact_app/home.dart';
 import 'package:contact_app/utils/app_theme.dart';
+import 'package:contact_app/view/call_log_details_view.dart';
 import 'package:contact_app/view/views.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Contact Phone',
       theme: AppTheme.light,
-      home: ContactDetailsView(userId: '1'),
+      home: CallLogDetailsView(),
       // HomePage(child: TeleponView()),
     );
   }

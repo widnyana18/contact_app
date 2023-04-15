@@ -1,10 +1,16 @@
-import 'package:contact_app/utils/sliver_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:random_avatar/random_avatar.dart';
 
+import '../utils/utils.dart';
+
 class ContactDetailsView extends StatelessWidget {
   final String userId;
-  const ContactDetailsView({super.key, required this.userId});
+  final bool showCallLogWidget;
+  ContactDetailsView({
+    super.key,
+    required this.userId,
+    this.showCallLogWidget = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -110,17 +116,60 @@ class ContactDetailsView extends StatelessWidget {
                   SizedBox(height: 20),
                   ListTile(
                     title: Text('WhatsApp'),
-                    trailing: Image.asset('assets/images/wa.png'),
+                    trailing: Image.network(
+                        'https://img.icons8.com/color/256/whatsapp.png'),
                   ),
                   SizedBox(height: 20),
                   ListTile(
                     title: Text('Meet'),
-                    trailing: Image.asset('assets/images/meet.png'),
+                    trailing: Image.network(
+                        'https://img.icons8.com/color/256/google-meet.png'),
                   ),
                   SizedBox(height: 20),
                   ListTile(
                     title: Text('Telegram'),
-                    trailing: Image.asset('assets/images/tele.png'),
+                    trailing: Image.network(
+                        'https://img.icons8.com/external-tal-revivo-color-tal-revivo/256/external-telegram-messenger-privately-held-company-with-cloud-based-instant-messaging-logo-color-tal-revivo.png'),
+                  ),
+                  SizedBox(height: 20),
+                  Divider(),
+                  SizedBox(height: 20),
+                  Text('Call History'),
+                  ...List.generate(
+                    3,
+                    (index) {
+                      final data = callLog[index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: ListTile(
+                          title: Text(data.date),
+                          subtitle: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(data.phone),
+                              SizedBox(width: 4),
+                              Icon(Icons.north_east_rounded),
+                            ],
+                          ),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(data.status),
+                              SizedBox(width: 4),
+                              Image.asset('assets/images/sim_2_outlined.png'),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    growable: showCallLogWidget,
+                  ),
+                  SizedBox(height: 20),
+                  TextButton(
+                    style:
+                        TextButton.styleFrom(backgroundColor: Colors.black26),
+                    child: Text('Show more'),
+                    onPressed: () {},
                   ),
                   SizedBox(height: 20),
                   Divider(),
