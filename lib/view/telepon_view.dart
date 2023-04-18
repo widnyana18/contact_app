@@ -1,5 +1,6 @@
 import 'package:contact_app/controllers/contact_notifier.dart';
-import 'package:contact_app/utils/data_view.dart';
+import 'package:contact_app/constants/data_view.dart';
+import 'package:contact_app/controllers/dial_pad_notifier.dart';
 import 'package:contact_app/view/dial_pad_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,18 +14,10 @@ class TeleponView extends StatefulWidget {
 }
 
 class _TeleponViewState extends State<TeleponView> {
-  // Future<List<TeleponInfo>> _loadData() async {
-  //   final value = await rootBundle.loadString('assets/data/contacts.json');
-  //   final list = json.decode(value);
-  //   List<TeleponInfo> data = list.map((v) {
-  //     return TeleponInfo.fromJson(v);
-  //   }).toList();
-  //   return data;
-  // }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final height = MediaQuery.of(context).size.height;
 
     return Stack(
       fit: StackFit.expand,
@@ -51,6 +44,7 @@ class _TeleponViewState extends State<TeleponView> {
             onPressed: () {
               showBottomSheet(
                 context: context,
+                constraints: BoxConstraints(maxHeight: height * .7),
                 builder: (context) => DialPadView(),
               );
             },

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:random_avatar/random_avatar.dart';
 
+import '../constants/call_log_data.dart';
 import '../utils/utils.dart';
 
 class ContactDetailsView extends StatelessWidget {

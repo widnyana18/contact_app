@@ -7,8 +7,7 @@ import 'package:provider/provider.dart';
 import 'controllers/controllers.dart';
 
 class HomePage extends StatelessWidget {
-  final Widget child;
-  const HomePage({super.key, required this.child});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,6 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: DefaultTabController(
-          initialIndex: 0,
           length: 2,
           child: Column(
             children: [
@@ -34,7 +32,6 @@ class HomePage extends StatelessWidget {
                     style: txtTheme.bodyLarge,
                   ),
                 ],
-                onTap: (index) {},
               ),
               Expanded(
                 child: NestedScrollView(
@@ -50,7 +47,18 @@ class HomePage extends StatelessWidget {
                             style: txtTheme.bodyLarge
                                 ?.copyWith(color: theme.canvasColor),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            showSearch(
+                              context: context,
+                              delegate: ContactSearchDelegate([
+                                'apple',
+                                'banana',
+                                'cherry',
+                                'date',
+                                'elderberry'
+                              ]),
+                            );
+                          },
                           shape: StadiumBorder(),
                           tileColor: Colors.black12,
                         ),
@@ -58,15 +66,8 @@ class HomePage extends StatelessWidget {
                       floating: true,
                     ),
                   ],
-                  body: MultiProvider(
-                    providers: [
-                      ChangeNotifierProvider(
-                        create: (_) => ContactNotifier(),
-                      ),
-                      ChangeNotifierProvider(
-                        create: (_) => DialPadNotifier(),
-                      ),
-                    ],
+                  body: ChangeNotifierProvider(
+                    create: (_) => ContactNotifier(),
                     child: TabBarView(
                       children: [
                         TeleponView(),

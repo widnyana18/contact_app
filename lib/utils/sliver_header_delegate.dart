@@ -33,7 +33,7 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
           crossFadeState: shrinkOffset >= maxExtent * .5
               ? CrossFadeState.showSecond
               : CrossFadeState.showFirst,
-          firstChild: expandedChild!,
+          firstChild: expandedChild ?? tightedChild,
           secondChild: tightedChild,
         ),
       ),

@@ -1,10 +1,11 @@
 import 'package:azlistview/azlistview.dart';
-import 'package:contact_app/components/contact_user_tile.dart';
-import 'package:contact_app/components/data_filter_widget.dart';
 import 'package:contact_app/controllers/contact_notifier.dart';
 import 'package:contact_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../components/components.dart';
+import '../constants/data_view.dart';
 
 class ContactView extends StatefulWidget {
   const ContactView({super.key});

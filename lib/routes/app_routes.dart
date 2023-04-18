@@ -1,67 +1,89 @@
 import 'package:contact_app/home.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../view/views.dart';
 
-final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
-final GlobalKey<NavigatorState> _shellNavigator =
-    GlobalKey(debugLabel: 'shell');
+const List<String> tabBarName = ['telepon', 'contact'];
 
-final goRouterProvider = GoRouter(
-  navigatorKey: _rootNavigator,
-  initialLocation: '/',
+final appRouter = GoRouter(
   routes: [
-    ShellRoute(
-      navigatorKey: _shellNavigator,
-      builder: (context, state, child) =>
-          HomePage(key: state.pageKey, child: child),
+    // GoRoute(
+    //   path: '/',
+    //   redirect: (context, state) => '/',
+    // ),
+    GoRoute(
+      path: '/',
+      builder: (context, state) {
+        return HomePage();
+      },
       routes: [
         GoRoute(
-          path: '/telepon',
-          name: 'telepon',
-          builder: (context, state) {
-            return TeleponView(
-              key: state.pageKey,
-            );
-          },
-        ),
-        GoRoute(
-          path: '/contact',
-          name: 'contact',
-          builder: (context, state) {
-            return ContactView(
-              key: state.pageKey,
-            );
-          },
+          path: tabBarName[0],
+          name: tabBarName[0],
+          builder: (context, state) => TeleponView(),
           routes: [
             GoRoute(
-              parentNavigatorKey: _shellNavigator,
-              path: '/:id',
+              path: ':userId',
+              name: 'telepon_details',
+              builder: (context, state) {
+                final id = state.params['userId']!;
+                return ContactDetailsView(
+                  userId: id,
+                  showCallLogWidget: true,
+                );
+              },
+              routes: [
+                GoRoute(
+                  path: 'logs',
+                  name: 'call_logs',
+                  builder: (context, state) => CallLogDetailsView(),
+                ),
+              ],
+            ),
+            GoRoute(
+              path: 'dial',
+              name: 'dial_pad',
+              builder: (context, state) => DialPadView(),
+            ),
+          ],
+        ),
+        GoRoute(
+          path: tabBarName[1],
+          name: tabBarName[1],
+          builder: (context, state) => ContactView(),
+          routes: [
+            GoRoute(
+              path: 'create',
+              name: 'add_contact',
+              builder: (context, state) => AddEditContactView(),
+            ),
+            GoRoute(
+              path: ':userId',
               name: 'contact-details',
               builder: (context, state) {
-                final id = state.params['id'].toString();
+                final id = state.params['userId']!;
                 return ContactDetailsView(
-                  key: state.pageKey,
                   userId: id,
                 );
               },
+              routes: [
+                GoRoute(
+                  path: 'edit',
+                  name: 'edit_contact',
+                  builder: (context, state) => AddEditContactView(),
+                ),
+              ],
             )
           ],
         ),
       ],
     ),
     GoRoute(
-      path: '/setting',
-      name: 'setting',
-      builder: (context, state) {
-        return SettingView(
-          key: state.pageKey,
-        );
-      },
+      path: '/call-in',
+      name: 'call_in',
+      builder: (context, state) => CallVIew(
+        key: state.pageKey,
+      ),
     )
   ],
-  errorBuilder: (context, state) => ErrorView(
-    key: state.pageKey,
-  ),
 );

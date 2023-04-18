@@ -1,5 +1,6 @@
-import 'package:contact_app/utils/utils.dart';
 import 'package:flutter/material.dart';
+
+import '../constants/call_log_data.dart';
 
 class CallLogDetailsView extends StatelessWidget {
   CallLogDetailsView({super.key});
