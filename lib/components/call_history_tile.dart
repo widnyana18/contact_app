@@ -1,5 +1,6 @@
 import 'package:contact_app/utils/model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:random_avatar/random_avatar.dart';
 
 class CallHistoryTile extends StatelessWidget {
@@ -20,12 +21,19 @@ class CallHistoryTile extends StatelessWidget {
       ),
       title: Text(data.name),
       subtitle: Text('${data.phone} ${data.date} $status'),
-      trailing: CircleAvatar(
-        radius: 22,
-        backgroundColor: Colors.grey,
-        child: Icon(Icons.keyboard_arrow_right_rounded),
+      trailing: IconButton(
+        onPressed: () {
+          context.push(
+            '/telepon/20',
+          );
+        },
+        color: Colors.grey,
+        iconSize: 22,
+        icon: Icon(Icons.keyboard_arrow_right_rounded),
       ),
-      onTap: () {},
+      onTap: () {
+        context.push('/call-in');
+      },
     );
   }
 }

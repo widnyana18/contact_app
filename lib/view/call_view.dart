@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:random_avatar/random_avatar.dart';
 
-class CallVIew extends StatelessWidget {
+class CallVIew extends StatefulWidget {
   CallVIew({super.key});
+
+  @override
+  State<CallVIew> createState() => _CallVIewState();
+}
+
+class _CallVIewState extends State<CallVIew> {
+  ValueNotifier<bool> _showDialPad = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +51,20 @@ class CallVIew extends StatelessWidget {
                 children: navigation.map(
                   (item) {
                     if (item.icon == Icons.call_end_rounded) {
-                      return IconButton(
-                        style: IconButton.styleFrom(
-                          backgroundColor: Colors.redAccent,
-                        ),
-                        onPressed: () {},
-                        icon: Icon(item.icon),
-                      );
+                      if (!_showDialPad.value) {
+                        return IconButton(
+                          style: IconButton.styleFrom(
+                            backgroundColor: Colors.redAccent,
+                          ),
+                          onPressed: item.onTap,
+                          icon: Icon(item.icon),
+                        );
+                      } else {
+                        return Container(color: Colors.blue);
+                      }
                     }
                     return InkWell(
-                      onTap: () {},
+                      onTap: item.onTap,
                       child: Column(
                         children: [
                           Icon(
@@ -75,41 +87,58 @@ class CallVIew extends StatelessWidget {
     );
   }
 
-  final navigation = [
-    CallProps(
-      label: 'Contact',
-      icon: Icons.person_outline,
-    ),
-    CallProps(
-      label: 'Add person',
-      icon: Icons.add_rounded,
-    ),
-    CallProps(
-      label: 'Note',
-      icon: Icons.mode_edit_outline_outlined,
-    ),
-    CallProps(
-      label: 'Silent',
-      icon: Icons.mic_off_outlined,
-    ),
-    CallProps(
-      label: 'Press',
-      icon: Icons.pause_circle_outline,
-    ),
-    CallProps(
-      label: 'Record',
-      icon: Icons.record_voice_over_outlined,
-    ),
-    CallProps(
-      icon: Icons.volume_up_outlined,
-    ),
-    CallProps(
-      icon: Icons.call_end_rounded,
-    ),
-    CallProps(
-      icon: Icons.grid_view_rounded,
-    ),
-  ];
+  List<CallProps> get navigation => [
+        CallProps(
+          label: 'Contact',
+          icon: Icons.person_outline,
+          onTap: () {
+            context.pushReplacement('/');
+          },
+        ),
+        CallProps(
+          label: 'Add person',
+          icon: Icons.add_rounded,
+          onTap: () {
+            context.pushReplacement('/');
+          },
+        ),
+        CallProps(
+          label: 'Note',
+          icon: Icons.mode_edit_outline_outlined,
+          onTap: () {},
+        ),
+        CallProps(
+          label: 'Silent',
+          icon: Icons.mic_off_outlined,
+          onTap: () {},
+        ),
+        CallProps(
+          label: 'Press',
+          icon: Icons.pause_circle_outline,
+          onTap: () {},
+        ),
+        CallProps(
+          label: 'Record',
+          icon: Icons.record_voice_over_outlined,
+          onTap: () {},
+        ),
+        CallProps(
+          icon: Icons.volume_up_outlined,
+          onTap: () {},
+        ),
+        CallProps(
+          icon: Icons.call_end_rounded,
+          onTap: () {
+            context.pop();
+          },
+        ),
+        CallProps(
+          icon: Icons.grid_view_rounded,
+          onTap: () {
+            _showDialPad.value = true;
+          },
+        ),
+      ];
 }
 
 @immutable

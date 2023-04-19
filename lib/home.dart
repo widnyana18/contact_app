@@ -1,13 +1,31 @@
 import 'package:contact_app/utils/utils.dart';
-import 'package:contact_app/view/contact_view.dart';
-import 'package:contact_app/view/telepon_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'controllers/controllers.dart';
+import 'view/views.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      final index = _tabController.index;
+      if (index == 1) {
+        Navigator.maybePop(context);
+      }
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +33,18 @@ class HomePage extends StatelessWidget {
     final txtTheme = theme.textTheme;
 
     return Scaffold(
-      body: SafeArea(
-        child: DefaultTabController(
-          length: 2,
+      body: GestureDetector(
+        onVerticalDragEnd: (details) {
+          Navigator.maybePop(context);
+        },
+        onHorizontalDragEnd: (details) {
+          Navigator.maybePop(context);
+        },
+        child: SafeArea(
           child: Column(
             children: [
               TabBar(
+                controller: _tabController,
                 automaticIndicatorColorAdjustment: false,
                 tabs: [
                   Text(
@@ -66,14 +90,12 @@ class HomePage extends StatelessWidget {
                       floating: true,
                     ),
                   ],
-                  body: ChangeNotifierProvider(
-                    create: (_) => ContactNotifier(),
-                    child: TabBarView(
-                      children: [
-                        TeleponView(),
-                        ContactView(),
-                      ],
-                    ),
+                  body: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      TeleponView(),
+                      ContactView(),
+                    ],
                   ),
                 ),
               ),

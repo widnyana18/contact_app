@@ -22,8 +22,6 @@ class _DialPadViewState extends State<DialPadView> {
 
   @override
   Widget build(BuildContext context) {
-    // final numberProvider = context.watch<DialPadNotifier>();
-
     return Material(
       color: Color.fromRGBO(255, 255, 255, 1),
       child: Padding(
@@ -43,7 +41,6 @@ class _DialPadViewState extends State<DialPadView> {
                       _controller.selection = TextSelection.fromPosition(
                         TextPosition(offset: _cursorPosition.value),
                       );
-                      print('POSSS: ${_cursorPosition.value}');
 
                       return Flexible(
                         child: TextField(
@@ -116,12 +113,16 @@ class _DialPadViewState extends State<DialPadView> {
                 ),
                 SizedBox(width: 8),
                 FilledButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushNamed('call_in');
+                  },
                   icon: Icon(Icons.call),
                   label: Text('byU'),
                 ),
                 FilledButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushNamed('call_in');
+                  },
                   icon: Icon(Icons.call),
                   label: Text('Smartfren'),
                 ),
@@ -141,4 +142,13 @@ class _DialPadViewState extends State<DialPadView> {
   }
 
   final labelPad = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '*', '0', '#'];
+}
+
+void showDialPad(BuildContext context) {
+  final height = MediaQuery.of(context).size.height;
+  showBottomSheet(
+    context: context,
+    constraints: BoxConstraints(maxHeight: height * .7),
+    builder: (context) => DialPadView(),
+  );
 }

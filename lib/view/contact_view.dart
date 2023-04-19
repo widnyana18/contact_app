@@ -2,6 +2,7 @@ import 'package:azlistview/azlistview.dart';
 import 'package:contact_app/controllers/contact_notifier.dart';
 import 'package:contact_app/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../components/components.dart';
@@ -92,7 +93,9 @@ class _ContactViewState extends State<ContactView> {
           bottom: 16.0,
           right: 16.0,
           child: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed('add_contact');
+            },
             tooltip: 'Add Contact',
             child: Icon(Icons.add_rounded),
             backgroundColor: theme.colorScheme.secondary,

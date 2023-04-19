@@ -3,7 +3,8 @@ import 'package:go_router/go_router.dart';
 
 import '../view/views.dart';
 
-const List<String> tabBarName = ['telepon', 'contact'];
+const teleponRoute = 'telepon';
+const contactRoute = 'contact';
 
 final appRouter = GoRouter(
   routes: [
@@ -18,8 +19,8 @@ final appRouter = GoRouter(
       },
       routes: [
         GoRoute(
-          path: tabBarName[0],
-          name: tabBarName[0],
+          path: teleponRoute,
+          name: teleponRoute,
           builder: (context, state) => TeleponView(),
           routes: [
             GoRoute(
@@ -48,8 +49,8 @@ final appRouter = GoRouter(
           ],
         ),
         GoRoute(
-          path: tabBarName[1],
-          name: tabBarName[1],
+          path: contactRoute,
+          name: contactRoute,
           builder: (context, state) => ContactView(),
           routes: [
             GoRoute(
@@ -62,9 +63,7 @@ final appRouter = GoRouter(
               name: 'contact-details',
               builder: (context, state) {
                 final id = state.params['userId']!;
-                return ContactDetailsView(
-                  userId: id,
-                );
+                return ContactDetailsView(userId: id);
               },
               routes: [
                 GoRoute(

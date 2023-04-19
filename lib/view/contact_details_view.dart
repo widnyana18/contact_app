@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:random_avatar/random_avatar.dart';
 
 import '../constants/call_log_data.dart';
@@ -26,13 +27,29 @@ class ContactDetailsView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.pop();
+                      },
+                      color: Colors.black,
                       icon: Icon(Icons.arrow_back_ios_new_rounded),
                     ),
-                    Text('Afif Juniesar Satriya'),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.more_vert),
+                    Text(
+                      'Afif Juniesar Satriya',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    PopupMenuButton(
+                      itemBuilder: (context) {
+                        return [
+                          PopupMenuItem(
+                            value: 0,
+                            child: Text('singleeee'),
+                          ),
+                        ];
+                      },
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: Colors.black,
+                      ),
                     ),
                   ],
                 ),
@@ -44,11 +61,15 @@ class ContactDetailsView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.pop();
+                            },
+                            color: Colors.black,
                             icon: Icon(Icons.arrow_back_ios_new_rounded),
                           ),
                           IconButton(
                             onPressed: () {},
+                            color: Colors.black,
                             icon: Icon(Icons.more_vert),
                           ),
                         ],
@@ -70,7 +91,12 @@ class ContactDetailsView extends StatelessWidget {
                               icon: Icon(Icons.favorite_border),
                             ),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                context.pushNamed(
+                                  'edit_contact',
+                                  params: {'userId': '20'},
+                                );
+                              },
                               icon: Icon(Icons.edit_note_rounded),
                             ),
                           ],
@@ -101,7 +127,9 @@ class ContactDetailsView extends StatelessWidget {
                           style: IconButton.styleFrom(
                             backgroundColor: Colors.blue,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            context.pushNamed('call_in');
+                          },
                           icon: Icon(Icons.call_rounded),
                         ),
                         IconButton(
@@ -143,6 +171,9 @@ class ContactDetailsView extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: ListTile(
+                          onTap: () {
+                            context.pushNamed('call_in');
+                          },
                           title: Text(data.date),
                           subtitle: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -170,7 +201,12 @@ class ContactDetailsView extends StatelessWidget {
                     style:
                         TextButton.styleFrom(backgroundColor: Colors.black26),
                     child: Text('Show more'),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.pushNamed(
+                        'call_logs',
+                        params: {'userId': '96'},
+                      );
+                    },
                   ),
                   SizedBox(height: 20),
                   Divider(),

@@ -1,5 +1,6 @@
 import 'package:awesome_select/awesome_select.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AddEditContactView extends StatefulWidget {
   const AddEditContactView({super.key});
@@ -13,11 +14,17 @@ class _AddEditContactViewState extends State<AddEditContactView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.greenAccent,
         title: DropdownButton(
+          isExpanded: true,
+          isDense: true,
           items: [
             DropdownMenuItem(
               child: ListTile(
-                title: Text('Google'),
+                title: Text(
+                  'Google',
+                  style: TextStyle(color: Colors.black),
+                ),
                 subtitle: Text('midnight@club.ru.id'),
               ),
               value: 0,
@@ -27,12 +34,16 @@ class _AddEditContactViewState extends State<AddEditContactView> {
         ),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            context.pop();
+          },
+          color: Colors.black,
           icon: Icon(Icons.close_rounded),
         ),
         actions: [
           IconButton(
             onPressed: () {},
+            color: Colors.black,
             icon: Icon(Icons.done_rounded),
           ),
         ],

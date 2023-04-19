@@ -1,8 +1,9 @@
-import 'package:contact_app/controllers/dial_pad_notifier.dart';
 import 'package:contact_app/routes/app_routes.dart';
 import 'package:contact_app/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'controllers/controllers.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,9 +12,16 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => DialPadNotifier(),
-      lazy: false,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ContactNotifier(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => DialPadNotifier(),
+          lazy: false,
+        ),
+      ],
       child: MaterialApp.router(
         routerDelegate: appRouter.routerDelegate,
         routeInformationParser: appRouter.routeInformationParser,

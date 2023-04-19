@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../constants/call_log_data.dart';
 
@@ -21,6 +22,9 @@ class CallLogDetailsView extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: ListTile(
+              onTap: () {
+                context.pushNamed('call_in');
+              },
               title: Text(data.date),
               subtitle: Row(
                 mainAxisSize: MainAxisSize.min,

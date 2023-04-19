@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:random_avatar/random_avatar.dart';
 
 class ContactUserTile extends StatelessWidget {
@@ -16,7 +17,9 @@ class ContactUserTile extends StatelessWidget {
         ),
       ),
       title: Text(name!),
-      onTap: () {},
+      onTap: () {
+        context.push('/contact/8');
+      },
     );
   }
 }

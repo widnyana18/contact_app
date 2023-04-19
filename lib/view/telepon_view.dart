@@ -1,6 +1,5 @@
 import 'package:contact_app/controllers/contact_notifier.dart';
 import 'package:contact_app/constants/data_view.dart';
-import 'package:contact_app/controllers/dial_pad_notifier.dart';
 import 'package:contact_app/view/dial_pad_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,10 +13,22 @@ class TeleponView extends StatefulWidget {
 }
 
 class _TeleponViewState extends State<TeleponView> {
+  ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showDialPad(context);
+      _scrollController.addListener(() {
+        Navigator.maybePop(context);
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final height = MediaQuery.of(context).size.height;
 
     return Stack(
       fit: StackFit.expand,
@@ -25,8 +36,8 @@ class _TeleponViewState extends State<TeleponView> {
         Consumer<ContactNotifier>(
           builder: (context, value, child) {
             final data = value.teleponList;
-            print(data.length);
             return ListView.builder(
+              controller: _scrollController,
               itemCount: data.length,
               itemBuilder: (context, index) {
                 if (index == 0) {
@@ -42,11 +53,7 @@ class _TeleponViewState extends State<TeleponView> {
           right: 16.0,
           child: FloatingActionButton(
             onPressed: () {
-              showBottomSheet(
-                context: context,
-                constraints: BoxConstraints(maxHeight: height * .7),
-                builder: (context) => DialPadView(),
-              );
+              showDialPad(context);
             },
             tooltip: 'Dialpad phone',
             child: Icon(Icons.dialpad),
