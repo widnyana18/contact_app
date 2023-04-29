@@ -86,6 +86,7 @@ class _DialPadViewState extends State<DialPadView> {
             SizedBox(height: 20),
             Expanded(
               child: GridView.count(
+                physics: NeverScrollableScrollPhysics(),
                 crossAxisCount: 3,
                 childAspectRatio: 1.3,
                 children: labelPad.map((pad) {

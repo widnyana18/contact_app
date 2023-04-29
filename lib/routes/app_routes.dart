@@ -69,7 +69,8 @@ final appRouter = GoRouter(
                 GoRoute(
                   path: 'edit',
                   name: 'edit_contact',
-                  builder: (context, state) => AddEditContactView(),
+                  builder: (context, state) =>
+                      AddEditContactView(editMode: true),
                 ),
               ],
             )

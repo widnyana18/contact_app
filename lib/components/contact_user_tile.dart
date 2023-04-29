@@ -20,8 +20,44 @@ class ContactUserTile extends StatelessWidget {
       onTap: () {
         context.push('/contact/8');
       },
+      onLongPress: () {
+        showModalBottomSheet(
+          isScrollControlled: true,
+          useSafeArea: true,
+          enableDrag: false,
+          context: context,
+          builder: (context) {
+            return Material(
+              color: Colors.white,
+              child: IntrinsicHeight(
+                child: Column(
+                  children: _actionMenu
+                      .map<Widget>((item) => ListTile(
+                            title: Text(item),
+                            onTap: () {},
+                          ))
+                      .toList()
+                    ..insert(
+                      0,
+                      Text('Marcuss Roy'),
+                    ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
+
+  List<String> _actionMenu = [
+    'Open',
+    'Edit',
+    'Favorite',
+    'Move to home',
+    'Delete',
+    'Delete colection',
+  ];
 }
 
 class ContactSusTile extends StatelessWidget {

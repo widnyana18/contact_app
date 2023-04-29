@@ -31,9 +31,47 @@ class CallHistoryTile extends StatelessWidget {
         iconSize: 22,
         icon: Icon(Icons.keyboard_arrow_right_rounded),
       ),
+      onLongPress: () {
+        showModalBottomSheet(
+          isScrollControlled: true,
+          useSafeArea: true,
+          enableDrag: false,
+          context: context,
+          builder: (context) {
+            return Material(
+              color: Colors.white,
+              child: IntrinsicHeight(
+                child: Column(
+                  children: _actionMenu
+                      .map<Widget>((item) => ListTile(
+                            title: Text(item),
+                            onTap: () {},
+                          ))
+                      .toList()
+                    ..insert(
+                      0,
+                      Text('Marcuss Roy'),
+                    ),
+                ),
+              ),
+            );
+          },
+        );
+      },
       onTap: () {
         context.push('/call-in');
       },
     );
   }
+
+  List<String> _actionMenu = [
+    'Send message',
+    'Call in SIM 1',
+    'Call in SIM 2',
+    'Edit',
+    'Copy',
+    'Block',
+    'Delete call log',
+    'Delete colection',
+  ];
 }

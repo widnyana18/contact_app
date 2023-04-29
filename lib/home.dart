@@ -1,7 +1,5 @@
 import 'package:contact_app/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'controllers/controllers.dart';
 import 'view/views.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,6 +12,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  ValueNotifier<bool> _useMenu = ValueNotifier(false);
+
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
@@ -21,9 +21,11 @@ class _HomePageState extends State<HomePage>
       final index = _tabController.index;
       if (index == 1) {
         Navigator.maybePop(context);
+        _useMenu.value = true;
+      } else {
+        _useMenu.value = false;
       }
     });
-
     super.initState();
   }
 
@@ -43,17 +45,47 @@ class _HomePageState extends State<HomePage>
         child: SafeArea(
           child: Column(
             children: [
-              TabBar(
-                controller: _tabController,
-                automaticIndicatorColorAdjustment: false,
-                tabs: [
-                  Text(
-                    'Calling',
-                    style: txtTheme.bodyLarge,
+              Row(
+                children: [
+                  Flexible(
+                    child: TabBar(
+                      controller: _tabController,
+                      automaticIndicatorColorAdjustment: false,
+                      tabs: [
+                        Text(
+                          'Calling',
+                          style: txtTheme.bodyLarge,
+                        ),
+                        Text(
+                          'Contact',
+                          style: txtTheme.bodyLarge,
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    'Contact',
-                    style: txtTheme.bodyLarge,
+                  ValueListenableBuilder(
+                    valueListenable: _useMenu,
+                    builder: (context, value, child) {
+                      if (_useMenu.value) {
+                        return PopupMenuButton(
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                              value: 0,
+                              child: Text('Import/export contact'),
+                            ),
+                            PopupMenuItem(
+                              value: 1,
+                              child: Text('Setting'),
+                            ),
+                          ],
+                          icon: Icon(
+                            Icons.more_vert,
+                            color: Colors.black,
+                          ),
+                        );
+                      }
+                      return SizedBox.shrink();
+                    },
                   ),
                 ],
               ),

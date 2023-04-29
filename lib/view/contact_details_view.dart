@@ -14,9 +14,12 @@ class ContactDetailsView extends StatelessWidget {
     this.showCallLogWidget = false,
   });
 
+  ValueNotifier<bool> _isFav = ValueNotifier(false);
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
     return Material(
       child: SafeArea(
         child: NestedScrollView(
@@ -38,14 +41,14 @@ class ContactDetailsView extends StatelessWidget {
                       style: TextStyle(color: Colors.black),
                     ),
                     PopupMenuButton(
-                      itemBuilder: (context) {
-                        return [
-                          PopupMenuItem(
-                            value: 0,
-                            child: Text('singleeee'),
-                          ),
-                        ];
-                      },
+                      itemBuilder: (context) => _actionMenu
+                          .map(
+                            (item) => PopupMenuItem(
+                              value: item,
+                              child: Text(item),
+                            ),
+                          )
+                          .toList(),
                       icon: Icon(
                         Icons.more_vert,
                         color: Colors.black,
@@ -86,9 +89,17 @@ class ContactDetailsView extends StatelessWidget {
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border),
+                            ValueListenableBuilder(
+                              valueListenable: _isFav,
+                              builder: (context, value, child) => IconButton(
+                                onPressed: () {
+                                  _isFav.value = !_isFav.value;
+                                },
+                                color: _isFav.value ? Colors.red : Colors.white,
+                                icon: _isFav.value
+                                    ? Icon(Icons.favorite)
+                                    : Icon(Icons.favorite_border),
+                              ),
                             ),
                             IconButton(
                               onPressed: () {
@@ -230,4 +241,13 @@ class ContactDetailsView extends StatelessWidget {
       ),
     );
   }
+
+  List<String> _actionMenu = [
+    'Move to home',
+    'Voice chat not be used',
+    'Delete contact',
+    'Block',
+    'Share',
+    'Set SIM 1 to call',
+  ];
 }
